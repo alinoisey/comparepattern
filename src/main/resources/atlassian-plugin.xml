@@ -1,0 +1,29 @@
+<atlassian-plugin key="${atlassian.plugin.key}" name="${project.name}" plugins-version="2">
+    <plugin-info>
+        <description>${project.description}</description>
+        <version>${project.version}</version>
+        <vendor name="${project.organization.name}" url="${project.organization.url}" />
+        <param name="plugin-icon">images/pluginIcon.png</param>
+        <param name="plugin-logo">images/pluginLogo.png</param>
+    </plugin-info>
+
+    <taskType key="ComparePattern" name="ComparePattern" class="com.tosan.TosanStart">
+        <description>A task that compare pattern'</description>
+
+    </taskType>
+
+    <!-- add our i18n resource -->
+    <resource type="i18n" name="i18n" location="TosanPlugin"/>
+
+<!--     add our web resources-->
+<!--    <web-resource key="TosanPlugin-resources" name="TosanPlugin Web Resources">-->
+<!--        <dependency>com.atlassian.auiplugin:ajs</dependency>-->
+
+<!--        <resource type="download" name="TosanPlugin.css" location="/css/TosanPlugin.css"/>-->
+<!--        <resource type="download" name="TosanPlugin.js" location="/js/TosanPlugin.js"/>-->
+<!--        <resource type="download" name="images/" location="/images"/>-->
+
+<!--        <context>TosanPlugin</context>-->
+<!--    </web-resource>-->
+    
+</atlassian-plugin>

@@ -9,8 +9,19 @@
 
     <taskType key="ComparePattern" name="ComparePattern" class="com.tosan.TosanStart">
         <description>A task that compare pattern'</description>
+        <resource type="download" name="icon" location="images/taskIcon.png"/>
 
     </taskType>
+
+<!--    <taskType key="Comparepattern" name="compare pattern" class="com.tosan.TosanStart">-->
+<!--        <description>compare pattern and  sending an email</description>-->
+<!--        <category name="deployment"/>-->
+<!--        <configuration class="com.tosan.MailSenderTaskConfigurator"/>-->
+<!--        <resource type="freemarker" name="edit" location="template/MailSenderTask.ftl"/>-->
+<!--        <resource type="download" name="icon" location="images/taskIcon.png"/>-->
+<!--    </taskType>-->
+
+
 
     <!-- add our i18n resource -->
     <resource type="i18n" name="i18n" location="TosanPlugin"/>

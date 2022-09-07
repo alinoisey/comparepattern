@@ -1,5 +1,6 @@
 package com.tosan;
 
+import com.atlassian.bamboo.build.logger.BuildLogger;
 import org.apache.log4j.Logger;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -9,7 +10,12 @@ import javax.xml.parsers.*;
 import java.io.File;
 
 public class SaxReaderFile {
-    private static Logger logger = Logger.getLogger(SaxReaderFile.class);
+    private BuildLogger buildLogger=null;
+
+    public SaxReaderFile(BuildLogger buildLogger) {
+        this.buildLogger = buildLogger;
+    }
+
 
     public String getPattern(String path) {
         SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
@@ -20,7 +26,7 @@ public class SaxReaderFile {
             saxParser.parse(input, standardHandler);
             return standardHandler.Pattern;
         } catch (Exception e) {
-            logger.error("path in SAX reader hase problem " + e);
+            buildLogger.addBuildLogEntry("path in SAX reader hase problem " + e);
         }
         return null;
     }
@@ -67,6 +73,14 @@ public class SaxReaderFile {
                 }
             }
         }
+    }
+
+    public BuildLogger getBuildLogger() {
+        return buildLogger;
+    }
+
+    public void setBuildLogger(BuildLogger buildLogger) {
+        this.buildLogger = buildLogger;
     }
 }
 

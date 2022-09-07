@@ -2,6 +2,7 @@ package com.tosan;
 
 import com.atlassian.bamboo.build.logger.BuildLogger;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,10 +11,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
-public class Preparer {
+public class PreparerCompare {
     private BuildLogger buildLogger;
 
-    public Preparer(BuildLogger buildLogger) {
+    public PreparerCompare(BuildLogger buildLogger) {
         this.buildLogger = buildLogger;
     }
 

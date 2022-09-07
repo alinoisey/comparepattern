@@ -2,15 +2,9 @@ package com.tosan;
 
 import com.atlassian.bamboo.build.logger.BuildLogger;
 import com.atlassian.bamboo.task.*;
-import com.atlassian.mail.Email;
-import com.atlassian.mail.MailException;
-import com.atlassian.mail.MailFactory;
-import com.atlassian.mail.server.SMTPMailServer;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.mail.javamail.MimeMailMessage;
 
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.List;
 
 
@@ -21,38 +15,10 @@ public class TosanStart implements TaskType {
        final BuildLogger buildLogger =taskContext.getBuildLogger();
         ComparePattern comparePattern=new ComparePattern(buildLogger);
         List<String> badlist=comparePattern.comparePattern(taskContext.getRootDirectory().getAbsolutePath());
-
-        try {
-            FileWriter fileWriter=new FileWriter("badlist.txt");
-            for (String list:badlist) {
-                fileWriter.write(list);
-
-            }
-            fileWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        buildLogger.addBuildLogEntry("compre start");
-        comparePattern.getBuildLogger();
-        buildLogger.addBuildLogEntry("Hello, World!!!");
-
-//        SMTPMailServer server = MailFactory.getServerManager().getDefaultSMTPMailServer();
-//        Email email = new Email("alinoisey@gmail.com");
-////        Email email = new Email(taskContext.getConfigurationMap().get("to"));
-////        buildLogger.addBuildLogEntry(taskContext.getConfigurationMap().get("to")+"===========");
-//        email.setSubject("report plugin bamboo");
-//        email.setBody("this is test plugin bamboo");
-//        email.setMimeType("text/html");
-//        email.setFrom("mypligin@noisey.com");
-//
-//
-//
-//        try {
-//            server.send(email);
-//        } catch (MailException e) {
-//            e.printStackTrace();
-//        }
-
+        File file=new File(taskContext.getWorkingDirectory().getAbsolutePath()+"outcompare.txt");
+        PrepareFile adabter=new PrepareFile(buildLogger);
+        adabter.getBodyMail(badlist,file);
+        buildLogger.addBuildLogEntry("task plugin finished ====================");
         return TaskResultBuilder.newBuilder(taskContext).success().build();
     }
 }

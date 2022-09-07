@@ -15,21 +15,15 @@ public class ComparePattern {
         this.buildLogger = buildLogger;
     }
 
-    public BuildLogger getBuildLogger() {
-        return buildLogger;
-    }
-
-    public void setBuildLogger(BuildLogger buildLogger) {
-        this.buildLogger = buildLogger;
-    }
 
     public List<String> comparePattern(String path) {
-        List<String> badlist = new ArrayList<>();
         buildLogger.addBuildLogEntry("comparepattern start ======================");
-        SaxReaderFile saxReaderFile = new SaxReaderFile();
-        Preparer preparer = new Preparer(buildLogger);
+        List<String> badlist = new ArrayList<>();
+        SaxReaderFile saxReaderFile = new SaxReaderFile(buildLogger);
+        PreparerCompare preparer = new PreparerCompare(buildLogger);
         List<String> list = preparer.prepare(path);
         buildLogger.addBuildLogEntry("list is readey to compare ============");
+
         for (String logback : list) {
             String pattern = saxReaderFile.getPattern(logback);
             ObjectMapper objectMapper = new ObjectMapper();
@@ -56,4 +50,12 @@ public class ComparePattern {
         }
         return badlist;
     }
+    public BuildLogger getBuildLogger() {
+        return buildLogger;
+    }
+
+    public void setBuildLogger(BuildLogger buildLogger) {
+        this.buildLogger = buildLogger;
+    }
+
 }

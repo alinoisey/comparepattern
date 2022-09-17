@@ -20,8 +20,8 @@ public class CompareTask implements TaskType {
         ComparePattern comparePattern = new ComparePattern(buildLogger);
         List<String> listProblemFiles = comparePattern.comparePattern(listFiles);
         buildLogger.addBuildLogEntry("compare finished ===================");
-        ResultCompareFile creatorOutFile = new ResultCompareFile(buildLogger);
-        creatorOutFile.createFile(listProblemFiles, path);
+        ResultCompareFile resultCompare = new ResultCompareFile(buildLogger);
+        resultCompare.createFile(listProblemFiles, path);
         buildLogger.addBuildLogEntry("task plugin finished ====================");
         return TaskResultBuilder.newBuilder(taskContext).success().build();
     }

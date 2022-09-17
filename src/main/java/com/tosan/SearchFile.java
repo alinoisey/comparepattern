@@ -1,14 +1,14 @@
 package com.tosan;
 
-import org.apache.log4j.Logger;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SearchFile {
-    private static Logger logger = Logger.getLogger(SearchFile.class);
     List<String> list = new ArrayList();
-    public List<String> getlogback(String path, String filename, List blacklist) {
+    CompareConfig blackListConfig= new CompareConfig();
+     public List<String> getListFiles(String path, String filename) {
+        List <String> blacklist=blackListConfig.getBlacklist();
         File file = new File(path);
         File[] listfiles = file.listFiles();
         for (File file1 : listfiles) {
@@ -21,7 +21,7 @@ public class SearchFile {
                     }
                 }
                 if (!blacklistof) {
-                    getlogback(file1.getAbsolutePath(), filename, blacklist);
+                    getListFiles(file1.getAbsolutePath(), filename);
                 }
             } else {
                 if (file1.getName().matches(filename)) {

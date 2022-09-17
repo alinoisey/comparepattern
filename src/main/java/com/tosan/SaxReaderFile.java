@@ -1,7 +1,6 @@
 package com.tosan;
 
 import com.atlassian.bamboo.build.logger.BuildLogger;
-import org.apache.log4j.Logger;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -26,9 +25,9 @@ public class SaxReaderFile {
             saxParser.parse(input, standardHandler);
             return standardHandler.Pattern;
         } catch (Exception e) {
-            buildLogger.addBuildLogEntry("path in SAX reader hase problem " + e);
+            buildLogger.addErrorLogEntry("path in SAX reader has problem " + e+"===================");
         }
-        return null;
+        return "null";
     }
 
 //-----------------------------------------------------------------------------------------

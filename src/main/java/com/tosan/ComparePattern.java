@@ -8,47 +8,37 @@ import org.apache.log4j.Logger;
 import java.util.*;
 
 public class ComparePattern {
-    private static Logger logger = Logger.getLogger(ComparePattern.class);
     private BuildLogger buildLogger;
-
+    final String key1="app_name";
+    final String key2="app_version";
+    final String key3="raw_log";
     public ComparePattern(BuildLogger buildLogger) {
         this.buildLogger = buildLogger;
     }
 
-
-    public List<String> comparePattern(String path) {
+    public List<String> comparePattern(List<String> listAddressFiles) {
         buildLogger.addBuildLogEntry("comparepattern start ======================");
-        List<String> badlist = new ArrayList<>();
+        List<String> listProblemFiles = new ArrayList<>();
         SaxReaderFile saxReaderFile = new SaxReaderFile(buildLogger);
-        PreparerCompare preparer = new PreparerCompare(buildLogger);
-        List<String> list = preparer.prepare(path);
-        buildLogger.addBuildLogEntry("list is readey to compare ============");
-
-        for (String logback : list) {
-            String pattern = saxReaderFile.getPattern(logback);
-            ObjectMapper objectMapper = new ObjectMapper();
-            HashMap hashMap;
+        ObjectMapper objectPattern = new ObjectMapper();
+        for (String addressfile : listAddressFiles) {
+            String pattern = saxReaderFile.getPattern(addressfile);
             try {
-                if (!pattern.isEmpty()) {
-                    String SPattern = pattern.toLowerCase();
-                    hashMap = objectMapper.readValue(SPattern, HashMap.class);
-                    if (hashMap.containsKey("app_name") & hashMap.containsKey("app_version") & hashMap.containsKey("raw_log")) {
-                        buildLogger.addBuildLogEntry("pattern " + logback + " is ok");
-                        logger.info("pattern " + logback + " is ok and contains app_name,app_version,raw_log ");
-                        logger.debug("pattern " + logback + " is ok and contains app_name,app_version,raw_log " + pattern);
+                if (!pattern.equals("null")) {
+                    String Pattern = pattern.toLowerCase();
+                    HashMap logstashPattern = objectPattern.readValue(Pattern, HashMap.class);
+                    if (logstashPattern.containsKey(key1) && logstashPattern.containsKey(key2) && logstashPattern.containsKey(key3)) {
                     } else {
-                        badlist.add("address is : "+logback+"\n");
-                        buildLogger.addBuildLogEntry("pattern " + logback + " is Not ok ");
+                        listProblemFiles.add("address is : "+addressfile+"\n");
                     }
                 } else {
-                    badlist.add("address is : "+logback+"\n");
-                    buildLogger.addBuildLogEntry("pattern " + logback + " is Not ok ");
+                    listProblemFiles.add("address is : "+addressfile+"\n");
                 }
             } catch (JsonProcessingException e) {
-                buildLogger.addErrorLogEntry("pattern " + logback + " is Not ok because pattern is No content " + e);
+                buildLogger.addErrorLogEntry("pattern " + addressfile + " is Not ok because pattern is No content " + e);
             }
         }
-        return badlist;
+        return listProblemFiles;
     }
     public BuildLogger getBuildLogger() {
         return buildLogger;

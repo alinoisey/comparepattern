@@ -16,7 +16,7 @@ public class SaxReaderFile {
     }
 
 
-    public String getPattern(String path) {
+    public String getLogstashPattern(String path) {
         SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
         try {
             File input = new File(path);
@@ -25,7 +25,7 @@ public class SaxReaderFile {
             saxParser.parse(input, standardHandler);
             return standardHandler.Pattern;
         } catch (Exception e) {
-            buildLogger.addErrorLogEntry("path in SAX reader has problem " + e+"===================");
+            buildLogger.addErrorLogEntry("logback file in SaxReader has problem " + e+"===================");
         }
         return "null";
     }

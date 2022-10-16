@@ -5,30 +5,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SearchFile {
-    List<String> list = new ArrayList();
-    CompareConfig blackListConfig= new CompareConfig();
-     public List<String> getListFiles(String path, String filename) {
-        List <String> blacklist=blackListConfig.getBlacklist();
-        File file = new File(path);
-        File[] listfiles = file.listFiles();
-        for (File file1 : listfiles) {
-            if (file1.isDirectory()) {
-                Boolean blacklistof = false;
-                for (int i = 0; i < blacklist.size(); i++) {
-                    if (file1.getName().equalsIgnoreCase((String) blacklist.get(i))){
-                        blacklistof = true;
+    private List<String> addressList = new ArrayList();
+    private CompareConfig blackListConfig = new CompareConfig();
+
+    public List<String> searchLogbackFiles(String path, String fileName) {
+        List<String> blackList = blackListConfig.getBlackList();
+        File searchPath = new File(path);
+        File[] listFiles = searchPath.listFiles();
+        for (File file : listFiles) {
+            if (file.isDirectory()) {
+                boolean blackListOf = false;
+                for (int i = 0; i < blackList.size(); i++) {
+                    if (file.getName().equalsIgnoreCase(blackList.get(i))) {
+                        blackListOf = true;
                         break;
                     }
                 }
-                if (!blacklistof) {
-                    getListFiles(file1.getAbsolutePath(), filename);
+                if (!blackListOf) {
+                    searchLogbackFiles(file.getAbsolutePath(), fileName);
                 }
             } else {
-                if (file1.getName().matches(filename)) {
-                    list.add(file.getAbsolutePath() + "\\" + filename);
+                if (file.getName().matches(fileName)) {
+                    addressList.add(file.getAbsolutePath() + "\\" + fileName);
                 }
             }
         }
-        return list;
+        return addressList;
     }
 }

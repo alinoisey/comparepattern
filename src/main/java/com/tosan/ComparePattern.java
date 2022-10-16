@@ -9,36 +9,36 @@ import java.util.*;
 
 public class ComparePattern {
     private BuildLogger buildLogger;
-    final String key1="app_name";
-    final String key2="app_version";
-    final String key3="raw_log";
+    private static final String APP_NAME="app_name";
+    private static final String APP_VERSION="app_version";
+    private static final String RAW_LOG="raw_log";
     public ComparePattern(BuildLogger buildLogger) {
         this.buildLogger = buildLogger;
     }
 
-    public List<String> comparePattern(List<String> listAddressFiles) {
+    public List<String> comparePatternLogback(List<String> listLogbackAddresses) {
         buildLogger.addBuildLogEntry("comparepattern start ======================");
-        List<String> listProblemFiles = new ArrayList<>();
-        SaxReaderFile saxReaderFile = new SaxReaderFile(buildLogger);
+        List<String> listProblemLogbackFiles = new ArrayList<>();
+        SaxReaderFile logstashReaderFile = new SaxReaderFile(buildLogger);
         ObjectMapper objectPattern = new ObjectMapper();
-        for (String addressfile : listAddressFiles) {
-            String pattern = saxReaderFile.getPattern(addressfile);
+        for (String addressLogbackFile : listLogbackAddresses) {
+            String logstashPatternFile = logstashReaderFile.getLogstashPattern(addressLogbackFile);
             try {
-                if (!pattern.equals("null")) {
-                    String Pattern = pattern.toLowerCase();
+                if (!logstashPatternFile.equals("null")) {
+                    String Pattern = logstashPatternFile.toLowerCase();
                     HashMap logstashPattern = objectPattern.readValue(Pattern, HashMap.class);
-                    if (logstashPattern.containsKey(key1) && logstashPattern.containsKey(key2) && logstashPattern.containsKey(key3)) {
+                    if (logstashPattern.containsKey(APP_NAME) && logstashPattern.containsKey(APP_VERSION) && logstashPattern.containsKey(RAW_LOG)) {
                     } else {
-                        listProblemFiles.add("address is : "+addressfile+"\n");
+                        listProblemLogbackFiles.add("address is : "+addressLogbackFile+"\n");
                     }
                 } else {
-                    listProblemFiles.add("address is : "+addressfile+"\n");
+                    listProblemLogbackFiles.add("address is : "+addressLogbackFile+"\n");
                 }
             } catch (JsonProcessingException e) {
-                buildLogger.addErrorLogEntry("pattern " + addressfile + " is Not ok because pattern is No content " + e);
+                buildLogger.addErrorLogEntry("pattern " + addressLogbackFile + " is Not ok because pattern is No content " + e);
             }
         }
-        return listProblemFiles;
+        return listProblemLogbackFiles;
     }
     public BuildLogger getBuildLogger() {
         return buildLogger;

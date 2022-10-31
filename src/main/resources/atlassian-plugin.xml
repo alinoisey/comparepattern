@@ -7,7 +7,7 @@
         <param name="plugin-logo">images/pluginLogo.png</param>
     </plugin-info>
 
-    <taskType key="ComparePattern" name="ComparePattern" class="com.tosan.CompareTask">
+    <taskType key="ComparePattern" name="ComparePattern" class="com.tosan.ComparatorTask">
         <description>A task that compare pattern'</description>
 <!--        <configuration class="com.tosan.configurators.ComparePatternConfigurator"/>-->
 <!--        <resource type="freemarker" name="edit" location="template/TosanStartTask.ftl"/>-->
@@ -15,7 +15,7 @@
 
     </taskType>
 
-<!--    <taskType key="Comparepattern" name="compare pattern" class="com.tosan.CompareTask">-->
+<!--    <taskType key="Comparepattern" name="compare pattern" class="com.tosan.ComparatorTask">-->
 <!--        <description>compare pattern and  sending an email</description>-->
 <!--        <category name="deployment"/>-->
 <!--        <configuration class="com.tosan.MailSenderTaskConfigurator"/>-->

@@ -8,25 +8,25 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.List;
 
-public class ResultCompareFile {
+public class Creator {
     private BuildLogger buildLogger;
 
-    public ResultCompareFile(BuildLogger buildLogger) {
+    public Creator(BuildLogger buildLogger) {
         this.buildLogger = buildLogger;
     }
 
     public OutputStreamWriter createResultCompareFile(List<String> listProblemLogbackFiles, String path) {
 
-        File resultCompareFile = new File(path + "ResultCompare.txt");
-        StringBuilder bodyResualtCompareFile = new StringBuilder();
+        File resultFile = new File(path + "ResultCompare.txt");
+        StringBuilder bodyResultFile = new StringBuilder();
 
         for (String problemLogbackFile : listProblemLogbackFiles) {
-            bodyResualtCompareFile.append("--- " + problemLogbackFile + "\n");
+            bodyResultFile.append("--- " + problemLogbackFile + "\n");
         }
         FileWriter resultCompare = null;
         try {
-            resultCompare = new FileWriter(resultCompareFile);
-            resultCompare.write(bodyResualtCompareFile.toString());
+            resultCompare = new FileWriter(resultFile);
+            resultCompare.write(bodyResultFile.toString());
             resultCompare.close();
         } catch (IOException e) {
             buildLogger.addBuildLogEntry("I/O Exception in ResultCompreFile =============================");

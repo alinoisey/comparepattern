@@ -8,10 +8,10 @@ import org.xml.sax.helpers.DefaultHandler;
 import javax.xml.parsers.*;
 import java.io.File;
 
-public class SaxReaderFile {
+public class SaxReader {
     private BuildLogger buildLogger=null;
 
-    public SaxReaderFile(BuildLogger buildLogger) {
+    public SaxReader(BuildLogger buildLogger) {
         this.buildLogger = buildLogger;
     }
 

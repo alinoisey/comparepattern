@@ -3,23 +3,22 @@ package com.tosan;
 import com.atlassian.bamboo.build.logger.BuildLogger;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.log4j.Logger;
 
 import java.util.*;
 
-public class ComparePattern {
+public class Comparator {
     private BuildLogger buildLogger;
     private static final String APP_NAME="app_name";
     private static final String APP_VERSION="app_version";
     private static final String RAW_LOG="raw_log";
-    public ComparePattern(BuildLogger buildLogger) {
+    public Comparator(BuildLogger buildLogger) {
         this.buildLogger = buildLogger;
     }
 
     public List<String> comparePatternLogback(List<String> listLogbackAddresses) {
         buildLogger.addBuildLogEntry("comparepattern start ======================");
         List<String> listProblemLogbackFiles = new ArrayList<>();
-        SaxReaderFile logstashReaderFile = new SaxReaderFile(buildLogger);
+        SaxReader logstashReaderFile = new SaxReader(buildLogger);
         ObjectMapper objectPattern = new ObjectMapper();
         for (String addressLogbackFile : listLogbackAddresses) {
             String logstashPatternFile = logstashReaderFile.getLogstashPattern(addressLogbackFile);

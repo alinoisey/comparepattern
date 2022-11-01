@@ -11,15 +11,14 @@ public class Searcher {
     private final String fileName="logback.xml";
 
     private List<String> getBlackList(){
-        final List<String> BLACKLIST=new ArrayList<>();
-        BLACKLIST.add("target");
-        BLACKLIST.add("values");
+        final List<String> blackList=new ArrayList<>();
+        blackList.add("target");
+        blackList.add("values");
 
-        return BLACKLIST;
+        return blackList;
     }
 
     public List<String> getListLogback(String path) {
-//        List<String> blackListConfig =Config.getBlackListDirecrctory();
         File searchPath = new File(path);
         File[] listFiles = searchPath.listFiles();
         for (File file : listFiles) {

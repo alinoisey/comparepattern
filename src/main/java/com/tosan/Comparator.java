@@ -18,23 +18,23 @@ public class Comparator {
     public List<String> comparePatternLogback(List<String> listLogbackAddresses) {
         buildLogger.addBuildLogEntry("comparepattern start ======================");
         List<String> listProblemLogbackFiles = new ArrayList<>();
-        SaxReader logstashReaderFile = new SaxReader(buildLogger);
+        SaxReader logstashReader = new SaxReader(buildLogger);
         ObjectMapper objectPattern = new ObjectMapper();
-        for (String addressLogbackFile : listLogbackAddresses) {
-            String logstashPatternFile = logstashReaderFile.getLogstashPattern(addressLogbackFile);
+        for (String logbackAddress : listLogbackAddresses) {
+            String logstashPatternFile = logstashReader.getLogstashPattern(logbackAddress);
             try {
                 if (!logstashPatternFile.equals("null")) {
                     String Pattern = logstashPatternFile.toLowerCase();
                     HashMap logstashPattern = objectPattern.readValue(Pattern, HashMap.class);
                     if (logstashPattern.containsKey(APP_NAME) && logstashPattern.containsKey(APP_VERSION) && logstashPattern.containsKey(RAW_LOG)) {
                     } else {
-                        listProblemLogbackFiles.add("address is : "+addressLogbackFile+"\n");
+                        listProblemLogbackFiles.add("address is : "+logbackAddress+"\n");
                     }
                 } else {
-                    listProblemLogbackFiles.add("address is : "+addressLogbackFile+"\n");
+                    listProblemLogbackFiles.add("address is : "+logbackAddress+"\n");
                 }
             } catch (JsonProcessingException e) {
-                buildLogger.addErrorLogEntry("pattern " + addressLogbackFile + " is Not ok because pattern is No content " + e);
+                buildLogger.addErrorLogEntry("pattern " + logbackAddress + " is Not ok because pattern is No content " + e);
             }
         }
         return listProblemLogbackFiles;

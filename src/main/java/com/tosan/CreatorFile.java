@@ -8,10 +8,10 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.List;
 
-public class Creator {
+public class CreatorFile {
     private BuildLogger buildLogger;
 
-    public Creator(BuildLogger buildLogger) {
+    public CreatorFile(BuildLogger buildLogger) {
         this.buildLogger = buildLogger;
     }
 

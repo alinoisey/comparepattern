@@ -20,7 +20,7 @@ public class ComparatorTask implements TaskType {
         Comparator comparator = new Comparator(buildLogger);
         List<String> listProblemLogback = comparator.comparePatternLogback(listLogbackAddresses);
         buildLogger.addBuildLogEntry("compare pattern for logback files finished ===================");
-        Creator resultCompare = new Creator(buildLogger);
+        CreatorFile resultCompare = new CreatorFile(buildLogger);
         resultCompare.createResultCompareFile(listProblemLogback, pathProject);
         buildLogger.addBuildLogEntry("task plugin finished ====================");
         return TaskResultBuilder.newBuilder(taskContext).success().build();

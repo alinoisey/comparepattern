@@ -23,7 +23,7 @@ public class SaxReader {
             SAXParser saxParser = saxParserFactory.newSAXParser();
             SaxReaderFileHandler standardHandler = new SaxReaderFileHandler();
             saxParser.parse(input, standardHandler);
-            return standardHandler.Pattern;
+            return standardHandler.pattern;
         } catch (Exception e) {
             buildLogger.addErrorLogEntry("logback file in SaxReader has problem " + e+"===================");
         }
@@ -35,20 +35,20 @@ public class SaxReader {
 
     class SaxReaderFileHandler extends DefaultHandler {
         boolean isPattern = false;
-        String Logstash = null;
-        String Pattern = null;
+        String logstash = null;
+        String pattern = null;
 
         @Override
         public void startElement(String uri,
                                  String localName, String qName, Attributes attributes)
                 throws SAXException {
             if (qName.equalsIgnoreCase("appender")) {
-                String s = attributes.getValue("class");
-                if (s.equalsIgnoreCase("net.logstash.logback.appender.LogstashTcpSocketAppender")) {
-                    Logstash = s;
+                String keyword = attributes.getValue("class");
+                if (keyword.equalsIgnoreCase("net.logstash.logback.appender.LogstashTcpSocketAppender")) {
+                    logstash = keyword;
                 }
             } else if (qName.equalsIgnoreCase("pattern")) {
-                if (Logstash != null) {
+                if (logstash != null) {
                     isPattern = true;
                 }
             }
@@ -58,7 +58,7 @@ public class SaxReader {
         public void endElement(String uri,
                                String localName, String qName) throws SAXException {
             if (qName.equalsIgnoreCase("appender")) {
-                Logstash = null;
+                logstash = null;
             }
         }
 
@@ -66,8 +66,8 @@ public class SaxReader {
         public void characters(char ch[],
                                int start, int length) throws SAXException {
             if (isPattern) {
-                if (Logstash != null) {
-                    Pattern = new String(ch, start, length);
+                if (logstash != null) {
+                    pattern = new String(ch, start, length);
                     isPattern = false;
                 }
             }

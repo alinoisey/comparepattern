@@ -6,16 +6,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.*;
 
-public class Comparator {
+public class ComparatorLogback {
     private BuildLogger buildLogger;
     private static final String APP_NAME="app_name";
     private static final String APP_VERSION="app_version";
     private static final String RAW_LOG="raw_log";
-    public Comparator(BuildLogger buildLogger) {
+    public ComparatorLogback(BuildLogger buildLogger) {
         this.buildLogger = buildLogger;
     }
 
-    public List<String> comparePatternLogback(List<String> listLogbackAddresses) {
+    public List<String> comparePattern(List<String> listLogbackAddresses) {
         buildLogger.addBuildLogEntry("comparepattern start ======================");
         List<String> listProblemLogbackFiles = new ArrayList<>();
         SaxReader logstashReader = new SaxReader(buildLogger);

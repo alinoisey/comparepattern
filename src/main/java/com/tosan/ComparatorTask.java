@@ -17,8 +17,8 @@ public class ComparatorTask implements TaskType {
         Searcher searcher = new Searcher();
         List<String> listLogbackAddresses = searcher.getListLogback(pathProject);
         buildLogger.addBuildLogEntry("search Logback files finished ================");
-        Comparator comparator = new Comparator(buildLogger);
-        List<String> listProblemLogback = comparator.comparePatternLogback(listLogbackAddresses);
+        ComparatorLogback comparator = new ComparatorLogback(buildLogger);
+        List<String> listProblemLogback = comparator.comparePattern(listLogbackAddresses);
         buildLogger.addBuildLogEntry("compare pattern for logback files finished ===================");
         CreatorFile resultCompare = new CreatorFile(buildLogger);
         resultCompare.createResultCompareFile(listProblemLogback, pathProject);

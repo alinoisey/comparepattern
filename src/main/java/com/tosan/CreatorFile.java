@@ -15,7 +15,7 @@ public class CreatorFile {
         this.buildLogger = buildLogger;
     }
 
-    public OutputStreamWriter createResultCompareFile(List<String> listProblemLogbackFiles, String path) {
+    public void createResultCompareFile(List<String> listProblemLogbackFiles, String path) {
 
         File resultFile = new File(path + "ResultCompare.txt");
         StringBuilder bodyResultFile = new StringBuilder();
@@ -23,17 +23,18 @@ public class CreatorFile {
         for (String problemLogbackFile : listProblemLogbackFiles) {
             bodyResultFile.append("--- " + problemLogbackFile + "\n");
         }
-        FileWriter resultCompare = null;
-        try {
-            resultCompare = new FileWriter(resultFile);
+//        FileWriter resultCompare = null;
+        try (FileWriter resultCompare=new FileWriter(resultFile) ){
+//            resultCompare = new FileWriter(resultFile);
             resultCompare.write(bodyResultFile.toString());
+            resultCompare.flush();
             resultCompare.close();
         } catch (IOException e) {
             buildLogger.addBuildLogEntry("I/O Exception in ResultCompreFile =============================");
             e.printStackTrace();
         }
         buildLogger.addBuildLogEntry("resultCompare writed into a file in the WorkDirectory ==================");
-        return resultCompare;
+//        return resultCompare;
     }
 
     public BuildLogger getBuildLogger() {

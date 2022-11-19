@@ -4,6 +4,7 @@ import com.atlassian.bamboo.build.logger.BuildLogger;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.File;
 import java.util.*;
 
 public class ComparatorLogback {
@@ -11,10 +12,40 @@ public class ComparatorLogback {
     private static final String APP_NAME="app_name";
     private static final String APP_VERSION="app_version";
     private static final String RAW_LOG="raw_log";
+    private List<String> addressList = new ArrayList();
+    private final String fileName="logback.xml";
+    private List<String> blackList=Arrays.asList(new String[]{"target", "values"});
+
     public ComparatorLogback(BuildLogger buildLogger) {
         this.buildLogger = buildLogger;
     }
 
+    public List<String> getListLogback(String path) {
+
+        File searchPath = new File(path);
+        File[] listFiles = searchPath.listFiles();
+        for (File file : listFiles) {
+            if (file.isDirectory()) {
+                if(!blackList.contains(file.getName()))
+                    getListLogback(file.getAbsolutePath());
+//                boolean blackListOf = false;
+//                for (int i = 0; i < getBlackList().size(); i++) {
+//                    if (file.getName().equalsIgnoreCase(getBlackList().get(i))) {
+//                        blackListOf = true;
+//                        break;
+//                    }
+//                }
+//                if (!blackListOf) {
+//                    getListLogback(file.getAbsolutePath());
+//                }
+            } else {
+                if (file.getName().matches(fileName)) {
+                    addressList.add(file.getAbsolutePath() + "\\" + fileName);
+                }
+            }
+        }
+        return addressList;
+    }
     public List<String> comparePattern(List<String> listLogbackAddresses) {
         buildLogger.addBuildLogEntry("comparepattern start ======================");
         List<String> listProblemLogbackFiles = new ArrayList<>();

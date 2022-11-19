@@ -5,13 +5,12 @@ import com.atlassian.bamboo.build.logger.BuildLogger;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.util.List;
 
-public class CreatorFile {
+public class Generator {
     private BuildLogger buildLogger;
 
-    public CreatorFile(BuildLogger buildLogger) {
+    public Generator(BuildLogger buildLogger) {
         this.buildLogger = buildLogger;
     }
 
@@ -23,18 +22,14 @@ public class CreatorFile {
         for (String problemLogbackFile : listProblemLogbackFiles) {
             bodyResultFile.append("--- " + problemLogbackFile + "\n");
         }
-//        FileWriter resultCompare = null;
         try (FileWriter resultCompare=new FileWriter(resultFile) ){
-//            resultCompare = new FileWriter(resultFile);
             resultCompare.write(bodyResultFile.toString());
             resultCompare.flush();
-            resultCompare.close();
         } catch (IOException e) {
             buildLogger.addBuildLogEntry("I/O Exception in ResultCompreFile =============================");
             e.printStackTrace();
         }
         buildLogger.addBuildLogEntry("resultCompare writed into a file in the WorkDirectory ==================");
-//        return resultCompare;
     }
 
     public BuildLogger getBuildLogger() {

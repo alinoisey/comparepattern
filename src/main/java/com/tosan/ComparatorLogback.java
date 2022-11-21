@@ -20,7 +20,7 @@ public class ComparatorLogback {
         this.buildLogger = buildLogger;
     }
 
-    public List<String> getListLogback(String path) {
+    private List<String> getListLogback(String path) {
 
         File searchPath = new File(path);
         File[] listFiles = searchPath.listFiles();
@@ -28,16 +28,7 @@ public class ComparatorLogback {
             if (file.isDirectory()) {
                 if(!blackList.contains(file.getName()))
                     getListLogback(file.getAbsolutePath());
-//                boolean blackListOf = false;
-//                for (int i = 0; i < getBlackList().size(); i++) {
-//                    if (file.getName().equalsIgnoreCase(getBlackList().get(i))) {
-//                        blackListOf = true;
-//                        break;
-//                    }
-//                }
-//                if (!blackListOf) {
-//                    getListLogback(file.getAbsolutePath());
-//                }
+
             } else {
                 if (file.getName().matches(fileName)) {
                     addressList.add(file.getAbsolutePath() + "\\" + fileName);
@@ -46,12 +37,13 @@ public class ComparatorLogback {
         }
         return addressList;
     }
-    public List<String> comparePattern(List<String> listLogbackAddresses) {
+    public String comparePattern(String path) {
         buildLogger.addBuildLogEntry("comparepattern start ======================");
-        List<String> listProblemLogbackFiles = new ArrayList<>();
         SaxReader logstashReader = new SaxReader(buildLogger);
         ObjectMapper objectPattern = new ObjectMapper();
-        for (String logbackAddress : listLogbackAddresses) {
+        StringBuilder listProblemLogbackFiles=new StringBuilder();
+
+        for (String logbackAddress : getListLogback(path)) {
             String logstashPatternFile = logstashReader.getLogstashPattern(logbackAddress);
             try {
                 if (!logstashPatternFile.equals("null")) {
@@ -59,16 +51,16 @@ public class ComparatorLogback {
                     HashMap logstashPattern = objectPattern.readValue(Pattern, HashMap.class);
                     if (logstashPattern.containsKey(APP_NAME) && logstashPattern.containsKey(APP_VERSION) && logstashPattern.containsKey(RAW_LOG)) {
                     } else {
-                        listProblemLogbackFiles.add("address is : "+logbackAddress+"\n");
+                        listProblemLogbackFiles.append("--- address is : "+logbackAddress+"\n");
                     }
                 } else {
-                    listProblemLogbackFiles.add("address is : "+logbackAddress+"\n");
+                    listProblemLogbackFiles.append("--- address is : "+logbackAddress+"\n");
                 }
             } catch (JsonProcessingException e) {
                 buildLogger.addErrorLogEntry("pattern " + logbackAddress + " is Not ok because pattern is No content " + e);
             }
         }
-        return listProblemLogbackFiles;
+        return listProblemLogbackFiles.toString();
     }
     public BuildLogger getBuildLogger() {
         return buildLogger;

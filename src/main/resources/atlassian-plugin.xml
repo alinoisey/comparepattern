@@ -10,6 +10,9 @@
     <taskType key="ComparePattern" name="ComparePattern" class="com.tosan.ComparatorTask">
         <description>A task that compare pattern'</description>
         <resource type="download" name="icon" location="images/taskIcon.png"/>
+        <category name="deployment"/>
+        <configuration class="com.tosan.MailSenderTaskConfigurator"/>
+        <resource type="freemarker" name="edit" location="template/MailSenderTask.ftl"/>
 
     </taskType>
 

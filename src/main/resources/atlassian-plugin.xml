@@ -7,8 +7,8 @@
         <param name="plugin-logo">images/pluginLogo.png</param>
     </plugin-info>
 
-    <taskType key="ComparePattern" name="ComparePattern" class="com.tosan.ComparatorTask">
-        <description>A task that compare pattern'</description>
+    <taskType key="ComparePatternLogback" name="ComparePatternLogback" class="com.tosan.ComparatorTask">
+        <description>A task that compare pattern logback.xml'</description>
         <resource type="download" name="icon" location="images/taskIcon.png"/>
         <category name="deployment"/>
         <configuration class="com.tosan.MailSenderTaskConfigurator"/>

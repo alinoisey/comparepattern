@@ -5,8 +5,8 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.tosan</groupId>
-    <artifactId>ComparePatternPlugin</artifactId>
-    <version>3.0.0-SNAPSHOT</version>
+    <artifactId>ComparePatternLogbackPlugin</artifactId>
+    <version>5.0.0-SNAPSHOT</version>
 
     <organization>
         <name>Example Company</name>
@@ -17,6 +17,12 @@
     <description>This is the com.tosan:TosanPlugin plugin for Atlassian Bamboo.</description>
     <packaging>atlassian-plugin</packaging>
 
+    <developers>
+        <developer>
+            <name>Ali Jalilzadeh</name>
+            <email>a.jalilzadeh@tosan.com</email>
+        </developer>
+    </developers>
     <properties>
         <bamboo.version>6.8.0</bamboo.version>
         <bamboo.data.version>6.8.0</bamboo.data.version>

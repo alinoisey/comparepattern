@@ -23,10 +23,10 @@ public class MailSender {
             Email email = new Email(taskContext.getConfigurationMap().get("to"), taskContext.getConfigurationMap().get("cc"), null);
             email.setFrom(mailServer.getDefaultFrom());
             email.setFromName(mailServer.getUsername());
-            email.setSubject("Report ComparatorLogback");
+            email.setSubject("Report ComparePatternLogback");
             email.setEncoding("UTF-8");
             email.setMimeType("text/html");
-            email.setBody("These addresses are related to logback files that have problems \n"+listProblemLogback);
+            email.setBody("These addresses are related to logback files that have problems : <br> <br>"+listProblemLogback);
             mailServer.send(email);
 
         } catch (MailException e) {

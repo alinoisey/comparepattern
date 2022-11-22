@@ -25,7 +25,7 @@ public class SaxReader {
             saxParser.parse(input, standardHandler);
             return standardHandler.pattern;
         } catch (Exception e) {
-            buildLogger.addErrorLogEntry("logback file in SaxReader has problem " + e+"===================");
+            buildLogger.addErrorLogEntry("logback file in SaxReader has problem " + e+"==> "+path+" ==========");
         }
         return "null";
     }

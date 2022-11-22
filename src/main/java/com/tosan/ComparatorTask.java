@@ -11,13 +11,13 @@ public class ComparatorTask implements TaskType {
     public TaskResult execute(@NotNull TaskContext taskContext) throws TaskException {
         final BuildLogger buildLogger = taskContext.getBuildLogger();
         String pathProject = taskContext.getWorkingDirectory().getAbsolutePath();
-        buildLogger.addBuildLogEntry("compare pattern for logback files started ================");
+        buildLogger.addBuildLogEntry("========== compare pattern for logback files started ==========");
         ComparatorLogback comparator = new ComparatorLogback(buildLogger);
         String listProblemLogback = comparator.comparePattern(pathProject);
-        buildLogger.addBuildLogEntry("compare pattern for logback files finished ===================");
+        buildLogger.addBuildLogEntry("========== compare pattern for logback files finished ==========");
         MailSender mail=new MailSender(taskContext,listProblemLogback);
         mail.sendMail();
-        buildLogger.addBuildLogEntry("send mail finished ===================");
+        buildLogger.addBuildLogEntry("========== send mail finished ==========");
 
         return TaskResultBuilder.newBuilder(taskContext).success().build();
     }

@@ -31,7 +31,7 @@ public class ComparatorLogback {
 
             } else {
                 if (file.getName().matches(fileName)) {
-                    addressList.add(file.getAbsolutePath() + "\\" + fileName);
+                    addressList.add(file.getAbsolutePath());
                 }
             }
         }
@@ -51,10 +51,10 @@ public class ComparatorLogback {
                     HashMap logstashPattern = objectPattern.readValue(Pattern, HashMap.class);
                     if (logstashPattern.containsKey(APP_NAME) && logstashPattern.containsKey(APP_VERSION) && logstashPattern.containsKey(RAW_LOG)) {
                     } else {
-                        listProblemLogbackFiles.append("--- address is : "+logbackAddress+"\n");
+                        listProblemLogbackFiles.append("address is : "+logbackAddress+"<br>");
                     }
                 } else {
-                    listProblemLogbackFiles.append("--- address is : "+logbackAddress+"\n");
+                    listProblemLogbackFiles.append("address is : "+logbackAddress+"<br>");
                 }
             } catch (JsonProcessingException e) {
                 buildLogger.addErrorLogEntry("pattern " + logbackAddress + " is Not ok because pattern is No content " + e);
